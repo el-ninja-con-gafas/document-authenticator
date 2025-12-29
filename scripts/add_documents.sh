@@ -125,7 +125,7 @@ log "INFO" "Verification ID: $VERIFICATION_ID"
 
 print_header "Step 2: Creating Verification Directory"
 
-VERIFY_DIRECTORY="document-authenticator/$VERIFICATION_ID"
+VERIFY_DIRECTORY="$VERIFICATION_ID"
 mkdir -p "$VERIFY_DIRECTORY"
 print_success "Directory created: $VERIFY_DIRECTORY"
 log "INFO" "Created directory: $VERIFY_DIRECTORY"
