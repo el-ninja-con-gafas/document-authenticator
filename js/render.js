@@ -1,4 +1,6 @@
-const VERIFICATION_BASE_URL = 'https://bitninja.net/document-authenticator';
+const BASE_PATH = window.location.pathname.includes('/document-authenticator') 
+  ? '/document-authenticator' 
+  : '';
 const ORGANIZATION_NAME = 'BitNinja Technology';
 const ORGANIZATION_DOMAIN = 'bitninja.net';
 
@@ -225,7 +227,7 @@ async function performVerification(sha256Hash) {
   const resultContainer = document.getElementById('verification-result');
   
   try {
-    const configPath = `/document-authenticator/${sha256Hash}/config.json`;
+    const configPath = `${BASE_PATH}/${sha256Hash}/config.json`;
     const response = await fetch(configPath);
 
     if (!response.ok) {
