@@ -125,10 +125,15 @@ log "INFO" "Verification ID: $VERIFICATION_ID"
 
 print_header "Step 2: Creating Verification Directory"
 
-VERIFY_DIRECTORY="$VERIFICATION_ID"
-mkdir -p "$VERIFY_DIRECTORY"
-print_success "Directory created: $VERIFY_DIRECTORY"
-log "INFO" "Created directory: $VERIFY_DIRECTORY"
+VERIFY_DIRECTORY="records/$VERIFICATION_ID"
+if mkdir -p "$VERIFY_DIRECTORY"; then
+    print_success "Directory created: $VERIFY_DIRECTORY"
+    log "INFO" "Created directory: $VERIFY_DIRECTORY"
+else
+    print_error "Failed to create directory: $VERIFY_DIRECTORY"
+    log "ERROR" "Could not create directory: $VERIFY_DIRECTORY"
+    exit 1
+fi
 
 print_header "Step 3: Creating Document Configuration"
 
