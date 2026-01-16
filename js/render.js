@@ -149,7 +149,7 @@ function getLandingPageHTML() {
     <div class="landing-page">
       <div class="container">
         <h1>Document Authentication System</h1>
-        <p class="subtitle">Confirm the authenticity and integrity of official documents issued by BitNinja Technology using advanced cryptographic verification</p>
+        <p class="subtitle">Confirm the authenticity and integrity of official documents issued by BitNinja Technology.</p>
       </div>
     </div>
 
