@@ -228,7 +228,7 @@ function getNotFoundResultHTML(verificationHash) {
       </div>
 
       <div class="info-box">
-        <h3 style="color: #dc2626;">What should you do?</h3>
+        <h3>What should you do?</h3>
         <ol style="margin: 0; padding-left: var(--spacing-lg);">
           <li>Verify that you are using the correct document file</li>
           <li>Contact ${escapeHtml(ORGANIZATION_NAME)} to confirm document authenticity</li>
@@ -236,7 +236,7 @@ function getNotFoundResultHTML(verificationHash) {
         </ol>
       </div>
 
-      <button class="access-button" onclick="location.reload();" style="width: 100%; margin-top: var(--spacing-lg);">Try Another Document</button>
+      <button class="access-button" onclick="location.reload();">Try Another Document</button>
     </div>
   `;
 }
