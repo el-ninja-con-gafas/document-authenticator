@@ -263,7 +263,7 @@ function getVerificationResultHTML(config) {
         </div>
         <div class="metadata-item">
           <span class="metadata-label">Verification ID:</span>
-          <span class="metadata-value" style="font-size: 11px;">${escapeHtml(config.verificationId)}</span>
+          <span class="metadata-value">${escapeHtml(config.verificationId)}</span>
         </div>
       </div>
   `;

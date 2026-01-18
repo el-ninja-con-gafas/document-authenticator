@@ -219,7 +219,7 @@ body::before {
 }
 
 .info-box h3 {
-  font-size: --font-size-lg;
+  font-size: var(--font-size-lg);
   margin-bottom: var(--spacing-md);
   font-weight: 600;
   color: var(--color-primary);
