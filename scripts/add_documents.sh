@@ -17,7 +17,7 @@ log() {
   shift
   local message="$@"
   local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-  echo -e "[${timestamp}] [${level}] ${message}" | tee -a "${LOG_FILE:-document-authenticator.log}"
+  echo -e "[${timestamp}] [${level}] ${message}"
 }
 
 print_header() {
@@ -62,47 +62,26 @@ validate_environment() {
   return 0
 }
 
-if [ $# -lt 1 ]; then
+if [ $# -lt 1 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
   cat << USAGE
-Usage: $0 <document_path> [options]
+Usage: $0 <document_path>
 
-Options:
-  --no-commit        Skip git commit and push
-  --help             Show this help message
+Environment Variables:
+  AUTO_COMMIT        Enable automatic git commit and push (default: false)
+  GIT_EMAIL          Git commit email address
+  GIT_USERNAME       Git commit username
+  GIT_REPOSITORY     Git repository URL
 
 Example:
   $0 input/BNT202410272317S.pdf
 USAGE
-  exit 1
+  exit 0
 fi
 
 DOCUMENT_PATH="$1"
-shift
 
-SKIP_COMMIT=false
-
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    --no-commit)
-      SKIP_COMMIT=true
-      shift
-      ;;
-    --help)
-      cat << USAGE
-Usage: $0 <document_path> [options]
-
-Options:
-  --no-commit        Skip git commit and push
-  --help             Show this help message
-USAGE
-      exit 0
-      ;;
-    *)
-      echo "Unknown option: $1" >&2
-      exit 1
-      ;;
-  esac
-done
+# Set default value for AUTO_COMMIT if not set
+AUTO_COMMIT="${AUTO_COMMIT:-false}"
 
 validate_environment || exit 1
 
@@ -178,7 +157,7 @@ HTML_TEMPLATE
 print_success "Index template created: $VERIFY_DIRECTORY/index.html"
 log "INFO" "Created index.html for verification ID: $VERIFICATION_ID"
 
-if [ "$SKIP_COMMIT" = false ]; then
+if [ "$AUTO_COMMIT" = "true" ]; then
   print_header "Step 5: Deploying to GitHub Pages"
   
   if [ "$AUTO_COMMIT" = "true" ]; then
@@ -210,10 +189,6 @@ if [ "$SKIP_COMMIT" = false ]; then
     print_warning "Auto-commit disabled in configuration"
     log "INFO" "Auto-commit disabled"
   fi
-else
-  print_warning "Git deployment skipped"
-  log "INFO" "Git deployment skipped"
-fi
 
 print_header "Document Added Successfully"
 
