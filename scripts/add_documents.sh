@@ -189,6 +189,7 @@ if [ "$AUTO_COMMIT" = "true" ]; then
     print_warning "Auto-commit disabled in configuration"
     log "INFO" "Auto-commit disabled"
   fi
+fi
 
 print_header "Document Added Successfully"
 
