@@ -1,0 +1,63 @@
+
+name: Notify BitNinja website deployments
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'index.html'
+      - 'css/**'
+      - 'js/**'
+      - 'images/**'
+      - 'records/**'
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger BitNinja.net deployment
+        env:
+          GH_TOKEN: ${{ secrets.BITNINJA_DEPLOY_TOKEN }}
+          SOURCE_SHA: ${{ github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          curl --fail-with-body --silent --show-error \
+            --request POST \
+            --url https://api.github.com/repos/el-ninja-con-gafas/bitninja.net/dispatches \
+            --header "Accept: application/vnd.github+json" \
+            --header "Authorization: Bearer ${GH_TOKEN}" \
+            --header "X-GitHub-Api-Version: 2022-11-28" \
+            --data "{
+              \"event_type\": \"authenticator-updated\",
+              \"client_payload\": {
+                \"source_sha\": \"${SOURCE_SHA}\"
+              }
+            }"
+
+      - name: Trigger BitNinja.dev deployment
+        env:
+          GH_TOKEN: ${{ secrets.BITNINJA_DEPLOY_TOKEN }}
+          SOURCE_SHA: ${{ github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          curl --fail-with-body --silent --show-error \
+            --request POST \
+            --url https://api.github.com/repos/el-ninja-con-gafas/bitninja.dev/dispatches \
+            --header "Accept: application/vnd.github+json" \
+            --header "Authorization: Bearer ${GH_TOKEN}" \
+            --header "X-GitHub-Api-Version: 2022-11-28" \
+            --data "{
+              \"event_type\": \"authenticator-updated\",
+              \"client_payload\": {
+                \"source_sha\": \"${SOURCE_SHA}\"
+              }
+            }"
